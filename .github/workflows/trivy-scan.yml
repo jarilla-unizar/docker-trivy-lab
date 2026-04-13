@@ -20,8 +20,6 @@ jobs:
 
       - name: Instalar Trivy (recomendado)
         uses: aquasecurity/setup-trivy@v0.2.6
-        with:
-          version: '0.69.3'   # Versión fija para tener resultados reproducibles
 
       # Instalación manual (solo ejemplo didáctico, no recomendada para CI):
       # - name: Instalar Trivy manualmente con apt
