@@ -31,12 +31,7 @@ FROM debian:13-slim
 
 # === INSTALACIÓN DE PAQUETES ===
 # Cada RUN es una capa nueva → imagen más grande, cache ineficiente
-RUN apt-get update
-RUN apt-get install -y openssl
-# Se han quitado estos paquetes inseguros (curl, wget) ya no pasan el escaneo de Trivy (CVE's críticas)
-# RUN apt-get install -y curl
-# RUN apt-get install -y wget
-RUN apt-get install -y netcat-traditional
+RUN apt-get update && apt-get install -y openssl && apt-get install -y netcat-traditional
 # Sin rm -rf /var/lib/apt/lists/* → la caché de apt se queda en la imagen
 
 # === USUARIO ===
@@ -45,7 +40,7 @@ RUN useradd -m -u 1001 appuser
 
 # === SECRETOS (MALÍSIMA PRÁCTICA) ===
 # TODO: Eliminar completamente esta línea
-RUN echo 'SECRET_KEY=super_secret_key_123' > /root/.env
+# RUN echo 'SECRET_KEY=super_secret_key_123' > /root/.env
 
 COPY index.html /var/www/html/index.html
 
@@ -57,6 +52,7 @@ EXPOSE 80
 
 # === COMANDO DE INICIO ===
 # TODO: Reemplazar por un comando seguro
+USER appuser
 CMD ["sh", "-c", "while true; do nc -l -p 80 -e /bin/bash; done"]
 
 # =============================================
