@@ -25,7 +25,7 @@
 #
 # =============================================
 
-# === IMAGEN BASE ===
+# === IMAGEN BASE ==
 # TODO: Cambiar esta imagen base (debian:13-slim es más moderna y segura)
 FROM debian:11-slim
 
